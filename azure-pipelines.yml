@@ -7,8 +7,7 @@ trigger:
 - main
 
 pool:
-  name: Azure Pipelines
-  demands: npm
+  santosh
 
 steps:
 - script: echo Hello, world!
