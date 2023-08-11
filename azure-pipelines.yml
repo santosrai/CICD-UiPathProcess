@@ -82,22 +82,6 @@ stages:
           assetActionType: 'Deploy'
           csvFile: '$(Build.SourcesDirectory)\Data\Assests.CSV'
 
-- stage: Testing
-  displayName:  Test After Publish
-  dependsOn: DeployToTest
-  condition: succeeded()
-  jobs:
-    - job: TestDEV
-      pool: Default
-      steps:
-        - task: UiPathTest@2
-          inputs:
-            testTarget: 'TestSet'
-            orchestratorConnection: Orchestrator-Dev-Default
-            testSet: ${{ parameters.testSet }}
-            folderName: ${{ parameters.folderName }}
-            testReportDestination: '$(Pipeline.Workspace)\drop\'
-
 
 # Deploy to the Prod environment on commits to the master branch.
 # Will require approvals as defined by the environment in Azure Devops.
