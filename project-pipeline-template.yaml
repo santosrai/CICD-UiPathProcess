@@ -46,7 +46,7 @@ stages:
       inputs:
         versionType: ${{ parameters.versioningStrategy }}
         projectJsonPath: '$(Build.SourcesDirectory)\${{ parameters.projectPath }}'
-        orchestratorConnection: Orchestrator-Dev-Default  # Update this to a service connection for your Orchestrator.
+        orchestratorConnection: uipath-ado-pipeline  # Update this to a service connection for your Orchestrator.
         outputPath: '$(Build.ArtifactStagingDirectory)\Output'
     # Publish the nuget package for later stages.
     - publish: $(Build.ArtifactStagingDirectory)\Output
@@ -68,7 +68,7 @@ stages:
     - task: UiPathInstallPlatform@3  # This installs required exes. Not necessary if using a dedicated build machine.
     - task: UiPathDeploy@3
       inputs:
-        orchestratorConnection: Orchestrator-Dev-Default
+        orchestratorConnection: uipath-ado-pipeline
         packagesPath: '$(Pipeline.Workspace)\drop'
         folderName: ${{ parameters.folderName }}
         environments: ${{ parameters.environments }}
@@ -81,7 +81,7 @@ stages:
       steps:
       - task: UiPathAssets@3
         inputs:
-          orchestratorConnection: Orchestrator-Dev-Default
+          orchestratorConnection: uipath-ado-pipeline
           folderName: ${{ parameters.folderName }}
           assetActionType: 'Deploy'
           csvFile: '$(Build.SourcesDirectory)\Data\Assests.CSV'
@@ -97,7 +97,7 @@ stages:
 #         - task: UiPathTest@3
 #           inputs:
 #             testTarget: 'TestSet'
-#             orchestratorConnection: Orchestrator-Dev-Default
+#             orchestratorConnection: uipath-ado-pipeline
 #             testSet: ${{ parameters.testSet }}
 #             folderName: ${{ parameters.folderName }}
 #             testReportDestination: '$(Pipeline.Workspace)\drop\'
@@ -123,7 +123,7 @@ stages:
           - task: UiPathInstallPlatform@3  # This installs required exes. Not necessary if using a dedicated build machine.
           - task: UiPathDeploy@3
             inputs:
-              orchestratorConnection: Orchestrator-Dev-Default  # Update this to a service connection for your Prod Orchestrator.
+              orchestratorConnection: uipath-ado-pipeline  # Update this to a service connection for your Prod Orchestrator.
               packagesPath: '$(Pipeline.Workspace)\drop'
               folderName: ${{ parameters.folderName }}
               environments: ${{ parameters.environments }}
