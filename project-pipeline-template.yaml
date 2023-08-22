@@ -41,8 +41,8 @@ stages:
     steps:
     - script: 'echo project path: ${{ parameters.projectPath }}, folder name: ${{ parameters.folderName }}, versioning strategy: ${{ parameters.versioningStrategy }}, environments: ${{ parameters.environments }}'
       displayName: Log parameters
-    - task: UiPathInstallPlatform@2  # This installs required exes. Not necessary if using a dedicated build machine.
-    - task: UiPathPack@2
+    - task: UiPathInstallPlatform@3  # This installs required exes. Not necessary if using a dedicated build machine.
+    - task: UiPathPack@3
       inputs:
         versionType: ${{ parameters.versioningStrategy }}
         projectJsonPath: '$(Build.SourcesDirectory)\${{ parameters.projectPath }}'
@@ -65,7 +65,7 @@ stages:
     steps:
     - download: current
       artifact: drop
-    - task: UiPathInstallPlatform@2  # This installs required exes. Not necessary if using a dedicated build machine.
+    - task: UiPathInstallPlatform@3  # This installs required exes. Not necessary if using a dedicated build machine.
     - task: UiPathDeploy@2
       inputs:
         orchestratorConnection: Orchestrator-Dev-Default
@@ -120,7 +120,7 @@ stages:
           steps:
           - download: current
             artifact: drop
-          - task: UiPathInstallPlatform@2  # This installs required exes. Not necessary if using a dedicated build machine.
+          - task: UiPathInstallPlatform@3  # This installs required exes. Not necessary if using a dedicated build machine.
           - task: UiPathDeploy@2
             inputs:
               orchestratorConnection: Orchestrator-Dev-Default  # Update this to a service connection for your Prod Orchestrator.
